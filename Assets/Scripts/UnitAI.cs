@@ -7,7 +7,7 @@ using Transform = UnityEngine.Transform;
 public class UnitAI : MonoBehaviour
 {
     private UnitBase _thisUnit;
-    [HideInInspector] public Transform targetPosition;
+    public Transform targetPosition;
     private bool isTargetInAttackRange;
 
     public UnitBase target;
@@ -75,8 +75,16 @@ public class UnitAI : MonoBehaviour
 
     public void DetectTarget()
     {
-        targetPosition = GameObject.FindGameObjectWithTag(targetTag).GetComponent<Transform>();
-        target = GameObject.FindGameObjectWithTag(targetTag).GetComponent<UnitBase>();
+        try
+        {
+            targetPosition = GameObject.FindGameObjectWithTag(targetTag).GetComponent<Transform>();
+            target = GameObject.FindGameObjectWithTag(targetTag).GetComponent<UnitBase>();
+        }
+        catch (System.Exception)
+        {
+            print("Pong");
+        }
+        
     }
 
     void MoveToTarget()
@@ -95,6 +103,7 @@ public class UnitAI : MonoBehaviour
     {
         var collider = Physics2D.OverlapCircle(transform.position, attRange, targetLayer);
         opponentDetected = collider != null;
+        if (target == null) return;
         if (opponentDetected && !target.isUnitDead && !_thisUnit.isUnitDead && _thisUnit.unitState == UnitAnimState.idle)
         {
             onOpponentDetected?.Invoke(collider.gameObject);

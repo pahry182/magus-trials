@@ -17,6 +17,9 @@ public class MainSceneController : UIController
     public TextMeshProUGUI slotText;
     public GameObject resultText;
     public Button RespawnButton;
+    public PlayerSpell activeSpellSet;
+    public Image[] cdFillings;
+    public Image[] manaFillings;
 
     private void Awake()
     {
@@ -24,6 +27,12 @@ public class MainSceneController : UIController
         startMenuPanel.gameObject.SetActive(true);
         ingamePanel.gameObject.SetActive(false);
         losePanel.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        ChangeSlot(0);
+        ChangeSlot(1);
     }
 
     private void Update()
@@ -38,6 +47,7 @@ public class MainSceneController : UIController
         }
         lifeText.text = "Life: " + GameManager.Instance.currentLife;
         checkpointText.text = "Checkpoint: " + GameManager.Instance.currentCheckpoint;
+        UpdateBatchCdFill();
     }
 
     private IEnumerator StartGame()
@@ -48,10 +58,69 @@ public class MainSceneController : UIController
         //GameManager.Instance.PlayBgm("Battle_Normal");
         StartCoroutine(GameManager.Instance._enemySpawnManager.SpawnEnemy());
         //GameManager.Instance.currentLife = GameManager.Instance.setLife;
-
+        
         yield return new WaitForSeconds(1f);
-
+        
         GameManager.Instance.InitiateBattle();
+        SetFillings();
+
+    }
+
+    public void SwitchCharacterButton()
+    {
+        GameManager.Instance.SwitchActiveCharacter();
+        SetFillings();
+    }
+
+    private void SetFillings()
+    {
+        activeSpellSet = GameManager.Instance._activeCharacter.GetComponent<PlayerSpell>();
+        for (int i = 0; i < activeSpellSet.spellList.Length; i++)
+        {
+            activeSpellSet.spellList[i].SetImageFilling(manaFillings[i], cdFillings[i]);
+        }
+    }
+
+    private void UpdateBatchCdFill()
+    {
+        if (activeSpellSet == null) return;
+        for (int i = 0; i < activeSpellSet.spellList.Length; i++)
+        {
+            activeSpellSet.spellList[i].UpdateCdFill(activeSpellSet.sharedCurrentCd, activeSpellSet.sharedCd);
+        }
+    }
+
+    public void UseSpell(string _name)
+    {
+        switch (_name)
+        {
+            case "Fire Burst":
+                activeSpellSet.FireBurstButton();
+                break;
+            case "Water Jet-Shot":
+                activeSpellSet.WaterJetShotButton();
+                break;
+            case "Lightning Bolt":
+                activeSpellSet.LightningBoltButton();
+                break;
+            case "Stone Solidify":
+                activeSpellSet.StoneSolidifyButton();
+                break;
+            case "Wind Slash":
+                activeSpellSet.WindSlashButton();
+                break;
+            case "Frost Nova":
+                activeSpellSet.FrostNovaButton();
+                break;
+            case "Illuminate":
+                activeSpellSet.IlluminateButton();
+                break;
+            case "Unholy Judgement":
+                activeSpellSet.UnholyJudgementButton();
+                break;
+            default:
+                break;
+        }
     }
 
     public IEnumerator GameOver()
@@ -75,7 +144,11 @@ public class MainSceneController : UIController
 
     public void StartGameButton()
     {
-        
+        if (GameManager.Instance._characterSlot[0] == null)
+        {
+            print("Pasang char di slot 1 tod");
+            return;
+        }
         StartCoroutine(StartGame());
     }
 
@@ -150,6 +223,11 @@ public class MainSceneController : UIController
             if (assignee == activeSlot[i])
             {
                 activeSlot[i] = null;
+                if (activeSlot[0] == null && activeSlot[1] != null)
+                {
+                    activeSlot[0] = activeSlot[1];
+                    activeSlot[1] = null;
+                }
                 break;
             }
             if (activeSlot[i] == null && !activeSlot.Contains(assignee))

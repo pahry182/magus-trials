@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     public int bossKillCount;
     public float totalDamageDealt;
     public float highestDamageDealt;
-    
+    public float timeMarked;
 
     private void Awake()
     {
@@ -125,6 +125,11 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < _characterPool.Length; i++)
         {
+            if (_characterPool[i] == _characterSlot[0])
+            {
+                _activeCharacter = _characterPool[i];
+                continue;
+            }
             _characterPool[i].gameObject.SetActive(false);
         }
         GameManager.Instance.isBattleStarted = true;
@@ -170,6 +175,44 @@ public class GameManager : MonoBehaviour
         {
             nextCheckpoint += currentCheckpoint;
             currentCheckpoint = currentWave;
+        }
+    }
+
+    public void SwitchActiveCharacter()
+    {
+        if (_characterSlot[1] == null) return;
+        
+        if(_activeCharacter == _characterSlot[0])
+        {
+            _activeCharacter.gameObject.SetActive(false);
+            _activeCharacter = _characterSlot[1];
+            _activeCharacter.gameObject.SetActive(true);
+            _activeCharacter._UnitAI.DetectTarget();
+            float elapsedTime = Time.time - timeMarked;
+            if (elapsedTime != 0)
+            {
+                _activeCharacter.GetComponent<PlayerSpell>().sharedCurrentCd -= elapsedTime;
+            }
+            timeMarked = Time.time;
+            if (_enemySpawnManager._enemy == null) return;
+            _enemySpawnManager._enemy._UnitAI.DetectTarget();
+            return;
+        }
+        if (_activeCharacter == _characterSlot[1])
+        {
+            _activeCharacter.gameObject.SetActive(false);
+            _activeCharacter = _characterSlot[0];
+            _activeCharacter.gameObject.SetActive(true);
+            _activeCharacter._UnitAI.DetectTarget();
+            float elapsedTime = Time.time - timeMarked;
+            if (elapsedTime != 0)
+            {
+                _activeCharacter.GetComponent<PlayerSpell>().sharedCurrentCd -= elapsedTime;
+            }
+            timeMarked = Time.time;
+            if (_enemySpawnManager._enemy == null) return;
+            _enemySpawnManager._enemy._UnitAI.DetectTarget();
+            return;
         }
     }
 

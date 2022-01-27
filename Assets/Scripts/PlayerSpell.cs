@@ -20,10 +20,16 @@ public class PlayerSpell : MonoBehaviour
         public float baseDamage;
         public float damageIncrement;
 
-        public void UpdateCooldown(float _sharedCurrentCd, float _sharedCd)
+        public void UpdateCdFill(float _sharedCurrentCd, float _sharedCd)
         {
             if (cdFillImage == null) return;
-            cdFillImage.fillAmount -= Time.deltaTime * 1 / _sharedCd;
+            //cdFillImage.fillAmount -= Time.deltaTime * 1 / _sharedCd;
+            if (_sharedCd <= 0 || _sharedCurrentCd <= 0)
+            {
+                cdFillImage.fillAmount = 0;
+                return;
+            }
+            cdFillImage.fillAmount = _sharedCurrentCd / _sharedCd;
         }
 
         public void StartCdFill()
@@ -49,6 +55,12 @@ public class PlayerSpell : MonoBehaviour
             {
                 manaFillImage.color = new Color32(255, 255, 255, 255);
             }
+        }
+
+        public void SetImageFilling(Image _mana, Image _cd)
+        {
+            cdFillImage = _cd;
+            manaFillImage = _mana;
         }
     }
     private UnitBase _ub;
@@ -97,9 +109,9 @@ public class PlayerSpell : MonoBehaviour
 
     private void Update()
     {
-        UpdateBatchCooldown();
         UpdateBatchSpellIncrement();
         UpdateBatchManaCost();
+        if (sharedCurrentCd > 0) sharedCurrentCd -= Time.deltaTime;
     }
 
     private void UpdateBatchSpellIncrement()
@@ -120,17 +132,7 @@ public class PlayerSpell : MonoBehaviour
         }
     }
 
-    private void UpdateBatchCooldown()
-    {
-        if (sharedCurrentCd > 0)
-        {
-            sharedCurrentCd -= Time.deltaTime;
-            for (int i = 0; i < spellList.Length; i++)
-            {
-                spellList[i].UpdateCooldown(sharedCurrentCd, sharedCd);
-            }
-        }
-    }
+    
 
     private void UpdateBatchManaCost()
     {

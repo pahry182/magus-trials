@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    private UnitBase _enemy;
-    private UnitAI _playerAI;
+    public UnitBase _enemy;
+    [SerializeField] private UnitAI _playerAI;
 
     private bool isCheckerRunning;
 
@@ -58,7 +58,8 @@ public class EnemySpawnManager : MonoBehaviour
             Instantiate(GameManager.Instance._normalEnemyPool[select], new Vector3(Random.Range(-8f, 8f), 0f, 0f), Quaternion.identity);
         }
         _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<UnitBase>();
-        _playerAI.DetectTarget();
+        GameManager.Instance._activeCharacter._UnitAI.DetectTarget();
+        //_playerAI.DetectTarget();
     }
 
     private void AudioCheck()
@@ -83,7 +84,7 @@ public class EnemySpawnManager : MonoBehaviour
         else if (_enemy.isUnitDead)
         {
             yield return new WaitForSeconds(enemyRespawnDelay/2);
-            Destroy(_enemy.gameObject);
+            RemoveEnemy();
             yield return new WaitForSeconds(enemyRespawnDelay/2);
             StartCoroutine(SpawnEnemy());
         }
@@ -93,6 +94,7 @@ public class EnemySpawnManager : MonoBehaviour
     public void RemoveEnemy()
     {
         if (_enemy == null) return;
+
         Destroy(_enemy.gameObject);
         GameManager.Instance.isEnemyPresent = false;
     }
