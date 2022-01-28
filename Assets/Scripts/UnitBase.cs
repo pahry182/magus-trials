@@ -272,7 +272,39 @@ public class UnitBase : MonoBehaviour
 
     public void CheckElementalReaction()
     {
-        
+        if ((affectedByElement == Element.Lightning && affectedBySecondElement == Element.Water) ||
+            (affectedByElement == Element.Water && affectedBySecondElement == Element.Lightning))
+        {
+            affectedByElement = Element.Neutral;
+            affectedBySecondElement = Element.Neutral;
+            StartCoroutine(Electrocuted());
+        }
+        if ((affectedByElement == Element.Fire && affectedBySecondElement == Element.Wind) ||
+            (affectedByElement == Element.Wind && affectedBySecondElement == Element.Fire))
+        {
+            affectedByElement = Element.Neutral;
+            affectedBySecondElement = Element.Neutral;
+            StartCoroutine(Wildfire());
+        }
+    }
+
+    private IEnumerator Electrocuted()
+    {
+        int instance = 5;
+        for (int i = 0; i < instance; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            GameManager.Instance.PlaySfx("Lightning Bolt");
+            Destroy(Instantiate(GameManager.Instance._specialEffects[1], transform.position, Quaternion.identity), 1f);
+            _UnitAI.target.DealDamage(25, true, Element.Lightning);
+        }
+    }
+    private IEnumerator Wildfire()
+    {
+        yield return new WaitForSeconds(0f);
+        GameManager.Instance.PlaySfx("Fire Burst");
+        Destroy(Instantiate(GameManager.Instance._specialEffects[2], transform.position, Quaternion.identity), 1f);
+        _UnitAI.target.DealDamage(125, true, Element.Fire);
     }
 
     private IEnumerator ApplyElementC(Element _element)

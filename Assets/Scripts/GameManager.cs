@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameObject[] _normalEnemyPool;
     public GameObject[] _bossEnemyPool;
+    public GameObject[] _specialEffects;
     public UnitBase[] _characterPool;
     public UnitBase[] _characterSlot;
     [HideInInspector] public EnemySpawnManager _enemySpawnManager;
