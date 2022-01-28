@@ -70,6 +70,7 @@ public class PlayerSpell : MonoBehaviour
     public Spell currentSpell = null;
 
     public Spell[] spellList;
+    public string[] ownedSpell;
     public GameObject specialEffect;
 
     [Header("Fire Burst")]

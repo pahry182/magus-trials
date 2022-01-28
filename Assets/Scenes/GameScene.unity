@@ -1031,6 +1031,9 @@ MonoBehaviour:
     damage: 0
     baseDamage: 67
     damageIncrement: 4
+  ownedSpell:
+  - Illuminate
+  - Stone Solidify
   specialEffect: {fileID: 1290921594140036537, guid: 6f87df3a432d5b041b0f621154406d50,
     type: 3}
   fireBurst_fireResDown: 0.16
@@ -1673,6 +1676,9 @@ MonoBehaviour:
     damage: 0
     baseDamage: 67
     damageIncrement: 4
+  ownedSpell:
+  - Fire Burst
+  - Water Jet-Shot
   specialEffect: {fileID: 1290921594140036537, guid: 6f87df3a432d5b041b0f621154406d50,
     type: 3}
   fireBurst_fireResDown: 0.16
@@ -5126,6 +5132,9 @@ MonoBehaviour:
     damage: 0
     baseDamage: 67
     damageIncrement: 4
+  ownedSpell:
+  - Frost Nova
+  - Lightning Bolt
   specialEffect: {fileID: 1290921594140036537, guid: 6f87df3a432d5b041b0f621154406d50,
     type: 3}
   fireBurst_fireResDown: 0.16
@@ -6412,6 +6421,9 @@ MonoBehaviour:
     damage: 0
     baseDamage: 67
     damageIncrement: 4
+  ownedSpell:
+  - Unholy Judgement
+  - Wind Slash
   specialEffect: {fileID: 1290921594140036537, guid: 6f87df3a432d5b041b0f621154406d50,
     type: 3}
   fireBurst_fireResDown: 0.16
@@ -9792,10 +9804,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _normalEnemyPool:
   - {fileID: 8758871889207157233, guid: b2c1e936e50e5934b86ecaf02624efda, type: 3}
-  - {fileID: 831818209590136347, guid: 00de9b69d04bc1d43a39c8a81740b9eb, type: 3}
   _bossEnemyPool:
   - {fileID: 5993298686312383988, guid: 5a9d6677da3c0514e9d4911e4e5f3c6e, type: 3}
-  - {fileID: 8583676390412353706, guid: 92a5a4ea9a9981646a2890e93b2de8ba, type: 3}
   _characterPool:
   - {fileID: 251976310}
   - {fileID: 832759346}

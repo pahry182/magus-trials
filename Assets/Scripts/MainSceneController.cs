@@ -67,12 +67,15 @@ public class MainSceneController : UIController
         StartCoroutine(FadeIn(ingamePanel, 1f));
         //GameManager.Instance.PlayBgm("Battle_Normal");
         StartCoroutine(GameManager.Instance._enemySpawnManager.SpawnEnemy());
+        GameManager.Instance.InitiateCharacter();
+        SetFillings();
         //GameManager.Instance.currentLife = GameManager.Instance.setLife;
-        
+
         yield return new WaitForSeconds(1f);
         
-        GameManager.Instance.InitiateBattle();
-        SetFillings();
+        
+        GameManager.Instance.isBattleStarted = true;
+        
 
     }
 
@@ -93,6 +96,48 @@ public class MainSceneController : UIController
         for (int i = 0; i < activeSpellSet.spellList.Length; i++)
         {
             activeSpellSet.spellList[i].SetImageFilling(manaFillings[i], cdFillings[i]);
+        }
+        SetSpellButton();
+    }
+
+    private void SetSpellButton()
+    {
+        foreach (var item in manaFillings)
+        {
+            item.gameObject.SetActive(false);
+        }
+
+        foreach (var item in activeSpellSet.ownedSpell)
+        {
+            switch (item)
+            {
+                case "Fire Burst":
+                    manaFillings[0].gameObject.SetActive(true);
+                    break;
+                case "Water Jet-Shot":
+                    manaFillings[1].gameObject.SetActive(true);
+                    break;
+                case "Lightning Bolt":
+                    manaFillings[2].gameObject.SetActive(true);
+                    break;
+                case "Stone Solidify":
+                    manaFillings[3].gameObject.SetActive(true);
+                    break;
+                case "Wind Slash":
+                    manaFillings[4].gameObject.SetActive(true);
+                    break;
+                case "Frost Nova":
+                    manaFillings[5].gameObject.SetActive(true);
+                    break;
+                case "Illuminate":
+                    manaFillings[6].gameObject.SetActive(true);
+                    break;
+                case "Unholy Judgement":
+                    manaFillings[7].gameObject.SetActive(true);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

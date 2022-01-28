@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void InitiateBattle()
+    public void InitiateCharacter()
     {
         for (int i = 0; i < _characterPool.Length; i++)
         {
@@ -140,7 +140,6 @@ public class GameManager : MonoBehaviour
             }
             _characterPool[i].gameObject.SetActive(false);
         }
-        GameManager.Instance.isBattleStarted = true;
     }
 
     public void ResetState()
