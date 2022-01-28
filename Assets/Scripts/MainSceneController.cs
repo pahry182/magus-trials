@@ -35,6 +35,10 @@ public class MainSceneController : UIController
 
     private void Start()
     {
+        foreach (var item in GameManager.Instance._characterPool)
+        {
+            item.gameObject.SetActive(false);
+        }
         ChangeSlot(0);
         ChangeSlot(1);
     }
@@ -282,6 +286,7 @@ public class MainSceneController : UIController
         {
             if (assignee == activeSlot[i])
             {
+                assignee.gameObject.SetActive(false);
                 activeSlot[i] = null;
                 if (activeSlot[0] == null && activeSlot[1] != null)
                 {
@@ -293,6 +298,7 @@ public class MainSceneController : UIController
             if (activeSlot[i] == null && !activeSlot.Contains(assignee))
             {
                 activeSlot[i] = assignee;
+                assignee.gameObject.SetActive(true);
                 break;
             }
         }

@@ -10,7 +10,7 @@ public enum UnitType
     COUNT
 }
 
-public enum UnitElement
+public enum Element
 {
     Neutral,
     Fire,
@@ -67,7 +67,7 @@ public class UnitBase : MonoBehaviour
 
     [Header("Advanced Stat")]
     public UnitType unitType = UnitType.Human;
-    public UnitElement unitElement = UnitElement.Neutral;
+    public Element unitElement = Element.Neutral;
     public bool isBoss;
     public float humanKiller = 0f;
     public float beastKiller = 0f;
@@ -100,6 +100,8 @@ public class UnitBase : MonoBehaviour
     public float attCooldown;
     public float stunDuration;
     public float frozenDuration;
+    public Element affectedByElement;
+    public Element affectedBySecondElement;
     [HideInInspector] public bool isAttack = false;
 
     //def/att /2 *10 = total taken damage
@@ -170,7 +172,7 @@ public class UnitBase : MonoBehaviour
         _rb.AddForce(transform.up * 4, ForceMode2D.Impulse);
     }
 
-    public void DealDamage(float amount, bool isSpellDamage = false, UnitElement _spellElementType = UnitElement.Neutral)
+    public void DealDamage(float amount, bool isSpellDamage = false, Element _spellElementType = Element.Neutral)
     {
         UnitBase target = _UnitAI.target;
         amount = CalculateKillers(amount, target);
@@ -230,36 +232,70 @@ public class UnitBase : MonoBehaviour
         return _amount;
     }
 
-    private float CalculateElementalRelation(float _amount, UnitElement _spellElementType, UnitBase _target)
+    private float CalculateElementalRelation(float _amount, Element _spellElementType, UnitBase _target)
     {
         switch (_spellElementType)
         {
-            case UnitElement.Fire:
+            case Element.Fire:
                 _amount += _amount * (fireAtt - _target.fireRes);
                 break;
-            case UnitElement.Water:
+            case Element.Water:
                 _amount += _amount * (waterAtt - _target.waterRes);
                 break;
-            case UnitElement.Lightning:
+            case Element.Lightning:
                 _amount += _amount * (lightningAtt - _target.lightningRes);
                 break;
-            case UnitElement.Earth:
+            case Element.Earth:
                 _amount += _amount * (earthAtt - _target.earthRes);
                 break;
-            case UnitElement.Wind:
+            case Element.Wind:
                 _amount += _amount * (windAtt - _target.windRes);
                 break;
-            case UnitElement.Ice:
+            case Element.Ice:
                 _amount += _amount * (iceAtt - _target.iceRes);
                 break;
-            case UnitElement.Light:
+            case Element.Light:
                 _amount += _amount * (lightAtt - _target.lightRes);
                 break;
-            case UnitElement.Dark:
+            case Element.Dark:
                 _amount += _amount * (darkAtt - _target.darkRes);
                 break;
         }
         return _amount;
+    }
+
+    public void ApplyElement(Element _element)
+    {
+        StartCoroutine(ApplyElementC(_element));
+        CheckElementalReaction();
+    }
+
+    public void CheckElementalReaction()
+    {
+        
+    }
+
+    private IEnumerator ApplyElementC(Element _element)
+    {
+        bool isSecondSlot = false;
+        if (affectedByElement == Element.Neutral)
+        {
+            affectedByElement = _element;
+        }
+        else
+        {
+            affectedBySecondElement = _element;
+            isSecondSlot = true;
+        }
+        yield return new WaitForSeconds(5f);
+        if (isSecondSlot)
+        {
+            affectedBySecondElement = Element.Neutral;
+        }
+        else
+        {
+            affectedByElement = Element.Neutral;
+        }
     }
 
     public void DeclareDeath(UnitBase target)

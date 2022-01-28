@@ -11,7 +11,7 @@ public class PlayerSpell : MonoBehaviour
         public string spellName;
         public Image cdFillImage;
         public Image manaFillImage;
-        public UnitElement spellElement;
+        public Element spellElement;
         public float cooldown;
         public float manaCost;
         public float baseManaCost;
@@ -188,6 +188,7 @@ public class PlayerSpell : MonoBehaviour
         _ub.Cast();
         _ub.currentMp -= currentSpell.manaCost;
         _ub.DealDamage(_spellDamageAmount, true, currentSpell.spellElement);
+        _ub._UnitAI.target.ApplyElement(currentSpell.spellElement);
         sharedCd = StartCooldown();
         sharedCurrentCd = sharedCd;
         GameManager.Instance.PlaySfx(currentSpell.spellName);

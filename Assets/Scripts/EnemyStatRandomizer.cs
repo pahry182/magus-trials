@@ -58,52 +58,52 @@ public class EnemyStatRandomizer : MonoBehaviour
         //{
         //    print(i);
         //}
-        int select = Random.Range(1, (int)UnitElement.COUNT);
-        _ub.unitElement = (UnitElement)select;
+        int select = Random.Range(1, (int)Element.COUNT);
+        _ub.unitElement = (Element)select;
         switch (_ub.unitElement)
         {
-            case UnitElement.Fire:
+            case Element.Fire:
                 _ub.waterRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.iceRes += GameManager.Instance.elementalRelationPoint;
                 _ub.fireAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(255, 0, 0, 255);
                 break;
-            case UnitElement.Water:
+            case Element.Water:
                 _ub.lightningRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.fireRes += GameManager.Instance.elementalRelationPoint;
                 _ub.waterAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(0, 0, 255, 255);
                 break;
-            case UnitElement.Lightning:
+            case Element.Lightning:
                 _ub.earthRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.waterRes += GameManager.Instance.elementalRelationPoint;
                 _ub.lightningAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(255, 0, 255, 255);
                 break;
-            case UnitElement.Earth:
+            case Element.Earth:
                 _ub.windRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.lightningRes += GameManager.Instance.elementalRelationPoint;
                 _ub.earthAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(240, 230, 16, 255);
                 break;
-            case UnitElement.Wind:
+            case Element.Wind:
                 _ub.iceRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.earthRes += GameManager.Instance.elementalRelationPoint;
                 _ub.windAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(0, 255, 0, 255);
                 break;
-            case UnitElement.Ice:
+            case Element.Ice:
                 _ub.fireRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.windRes += GameManager.Instance.elementalRelationPoint;
                 _ub.iceAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(0, 255, 255, 255);
                 break;
-            case UnitElement.Light:
+            case Element.Light:
                 _ub.darkRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.lightAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(255, 255, 255, 255);
                 break;
-            case UnitElement.Dark:
+            case Element.Dark:
                 _ub.lightRes -= GameManager.Instance.elementalRelationPoint;
                 _ub.darkAtt += GameManager.Instance.elementalProwessPoint;
                 _ub._sr.material.color = new Color32(0, 0, 0, 255);
