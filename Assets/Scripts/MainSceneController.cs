@@ -20,6 +20,10 @@ public class MainSceneController : UIController
     public PlayerSpell activeSpellSet;
     public Image[] cdFillings;
     public Image[] manaFillings;
+    public Image switchCdFill;
+
+    public float cdSwitch;
+    public float currentCdSwitch;
 
     private void Awake()
     {
@@ -48,6 +52,12 @@ public class MainSceneController : UIController
         lifeText.text = "Life: " + GameManager.Instance.currentLife;
         checkpointText.text = "Checkpoint: " + GameManager.Instance.currentCheckpoint;
         UpdateBatchCdFill();
+        if (currentCdSwitch > 0)
+        {
+            currentCdSwitch -= Time.deltaTime;
+            switchCdFill.fillAmount = currentCdSwitch / cdSwitch;
+        }
+        
     }
 
     private IEnumerator StartGame()
@@ -68,8 +78,13 @@ public class MainSceneController : UIController
 
     public void SwitchCharacterButton()
     {
-        GameManager.Instance.SwitchActiveCharacter();
-        SetFillings();
+        if (currentCdSwitch <= 0)
+        {
+            currentCdSwitch = cdSwitch;
+            switchCdFill.fillAmount = 1f;
+            GameManager.Instance.SwitchActiveCharacter();
+            SetFillings();
+        }
     }
 
     private void SetFillings()

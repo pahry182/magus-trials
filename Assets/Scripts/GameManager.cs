@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public UnitBase _activeCharacter;
     public new Audio audio = new Audio();
     public Setting setting = new Setting();
+    public Vector3[] startPos;
 
     public bool isBattleStarted;
     public bool isEnemyPresent;
@@ -64,6 +65,10 @@ public class GameManager : MonoBehaviour
     {
         SetupAudio();
         PlayBgm("Menu_Main");
+        for (int i = 0; i < _characterPool.Length; i++)
+        {
+            startPos[i] = _characterPool[i].transform.position;
+        }
     }
 
     // Update is called once per frame
@@ -104,7 +109,10 @@ public class GameManager : MonoBehaviour
         if (_target.tag == "Enemy")
         {
             isEnemyPresent = false;
-            _activeCharacter.currentHp = _activeCharacter.maxHp;
+            foreach (var character in GameManager.Instance._characterSlot)
+            {
+                character.currentHp = character.maxHp;
+            }
         }
         else if (_target.tag == "Player")
         {
@@ -137,15 +145,23 @@ public class GameManager : MonoBehaviour
 
     public void ResetState()
     {
-        _activeCharacter.ReviveUnit();
-        _activeCharacter.unitLevel = 1;
-        _activeCharacter.maxHp = baseHp;
-        _activeCharacter.maxMp = baseMp;
-        _activeCharacter.maxXp = baseXp;
-        _activeCharacter.currentHp = baseHp;
-        _activeCharacter.currentXp = 0f;
-        _activeCharacter.att = baseAtt;
-        _activeCharacter.def = basedef;
+        foreach (var character in GameManager.Instance._characterPool)
+        {
+            character.ReviveUnit();
+            character.unitLevel = 1;
+            character.maxHp = baseHp;
+            character.maxMp = baseMp;
+            character.maxXp = baseXp;
+            character.currentHp = baseHp;
+            character.currentXp = 0f;
+            character.att = baseAtt;
+            character.def = basedef;
+        }
+        for (int i = 0; i < _characterPool.Length; i++)
+        {
+            _characterPool[i].transform.position = startPos[i];
+            _characterPool[i].gameObject.SetActive(true);
+        }
         _enemySpawnManager.RemoveEnemy();
         _msC.RespawnButton.interactable = true;
         isEnemyPresent = false;
@@ -162,7 +178,10 @@ public class GameManager : MonoBehaviour
 
     public void RespawnCheckpoint()
     {
-        _activeCharacter.ReviveUnit();
+        foreach (var character in GameManager.Instance._characterSlot)
+        {
+            character.ReviveUnit();
+        }
         currentLife--;
         currentWave = currentCheckpoint;
         isPlayerRespawning = true;
@@ -181,11 +200,13 @@ public class GameManager : MonoBehaviour
     public void SwitchActiveCharacter()
     {
         if (_characterSlot[1] == null) return;
-        
-        if(_activeCharacter == _characterSlot[0])
+        Vector3 pos = _activeCharacter.transform.position;
+        pos.y++;
+        if (_activeCharacter == _characterSlot[0])
         {
             _activeCharacter.gameObject.SetActive(false);
             _activeCharacter = _characterSlot[1];
+            _activeCharacter.transform.position = pos;
             _activeCharacter.gameObject.SetActive(true);
             _activeCharacter._UnitAI.DetectTarget();
             float elapsedTime = Time.time - timeMarked;
@@ -202,6 +223,7 @@ public class GameManager : MonoBehaviour
         {
             _activeCharacter.gameObject.SetActive(false);
             _activeCharacter = _characterSlot[0];
+            _activeCharacter.transform.position = pos;
             _activeCharacter.gameObject.SetActive(true);
             _activeCharacter._UnitAI.DetectTarget();
             float elapsedTime = Time.time - timeMarked;

@@ -267,13 +267,18 @@ public class UnitBase : MonoBehaviour
         target.currentHp = 0;
         target.isUnitDead = true;
         target.GetComponentInChildren<Animator>().SetBool("isUnitDead", true);
+        int exp;
         if (target.isBoss)
         {
-            GainExp((int)((Random.Range(45, 75) * (0.65 * target.unitLevel)) + target.unitLevel) * 2);
+            exp = (int)((Random.Range(45, 75) * (0.65 * target.unitLevel)) + target.unitLevel) * 2;
         } 
         else
         {
-            GainExp((int)((Random.Range(25, 55) * (0.6 * target.unitLevel)) + target.unitLevel) * 2);
+            exp = (int)((Random.Range(25, 55) * (0.6 * target.unitLevel)) + target.unitLevel) * 2;
+        }
+        foreach (var character in GameManager.Instance._characterSlot)
+        {
+            character.GainExp(exp / 2);
         }
         GameManager.Instance.StatisticTrackKill(target, gameObject);
         GameManager.Instance.CheckDeath(target.gameObject);
