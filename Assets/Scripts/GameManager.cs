@@ -178,6 +178,7 @@ public class GameManager : MonoBehaviour
 
     public void RespawnCheckpoint()
     {
+        _enemySpawnManager.RemoveEnemy();
         foreach (var character in GameManager.Instance._characterSlot)
         {
             character.ReviveUnit();
@@ -185,7 +186,6 @@ public class GameManager : MonoBehaviour
         currentLife--;
         currentWave = currentCheckpoint;
         isPlayerRespawning = true;
-        _enemySpawnManager.RemoveEnemy();
     }
 
     public void SetCheckpoint()

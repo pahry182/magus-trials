@@ -59,7 +59,10 @@ public class UnitBase : MonoBehaviour
     public float def = 2f;
     public float spellRes = 0.15f;
     public float movSpeed = 1f;
-    public float attSpeed = 1f;
+
+    [Header("Attack Animation")]
+    public float attSwing = 1f;
+    public float attBackSwing = 0.4f;
 
     [Header("Growth Stat")]
     public float growthHp;
@@ -102,6 +105,7 @@ public class UnitBase : MonoBehaviour
     public float attCooldown;
     public float stunDuration;
     public float frozenDuration;
+    
     public Element affectedByElement;
     public Element affectedBySecondElement;
     [HideInInspector] public bool isAttack = false;
@@ -133,7 +137,7 @@ public class UnitBase : MonoBehaviour
             frozenDuration -= Time.deltaTime;
             unitState = UnitAnimState.frozen;
         }
-        else if (attCooldown <= 0 && unitState != UnitAnimState.special)
+        else if (attCooldown <= 0 && unitState != UnitAnimState.special && unitState != UnitAnimState.moving)
         {
             unitState = UnitAnimState.idle;
         }
@@ -149,10 +153,16 @@ public class UnitBase : MonoBehaviour
     {
         if (attCooldown <= 0 && !isUnitDead && unitState == UnitAnimState.attacking)
         {
-            attCooldown = attSpeed;
-            Jump();
-            DealDamage(att);
+            attCooldown = attSwing + attBackSwing;
+            //Jump();
+            StartCoroutine(AttackAnimation());
         }
+    }
+
+    private IEnumerator AttackAnimation()
+    {
+        yield return new WaitForSeconds(attBackSwing);
+        DealDamage(att);
     }
 
     public void Cast()
@@ -174,7 +184,7 @@ public class UnitBase : MonoBehaviour
         _rb.AddForce(transform.up * 4, ForceMode2D.Impulse);
     }
 
-    public void DealDamage(float amount, bool isSpellDamage = false, Element _spellElementType = Element.Neutral)
+    public void DealDamage(float amount, bool isSpellDamage = false, Element _spellElementType = Element.Neutral, bool isCrit = false)
     {
         UnitBase target = _UnitAI.target;
         amount = CalculateKillers(amount, target);
@@ -197,6 +207,13 @@ public class UnitBase : MonoBehaviour
                 amount -= Mathf.Round(amount * targetDamageReduction);
             }
         }
+
+        int select = Random.Range(0, 100);
+        if (select < critChance)
+        {
+            amount += amount * critMultiplier;
+            isCrit = true;
+        }
         
         if (target.currentShd >= amount)
         {
@@ -217,8 +234,17 @@ public class UnitBase : MonoBehaviour
         }
         if (isManastriking) isManastriking = false;
 
-        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], target.transform.position, Quaternion.identity);
-        temp.GetComponentInChildren<TextMeshPro>().text = Mathf.Round(amount).ToString();
+        Vector3 pos = target.transform.position;
+        pos.y += Random.Range(-0.2f, 0.2f);
+        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
+        if (isCrit)
+        {
+            temp.GetComponentInChildren<TextMeshPro>().text = "Crit " + Mathf.Round(amount).ToString();
+        }
+        else
+        {
+            temp.GetComponentInChildren<TextMeshPro>().text = Mathf.Round(amount).ToString();
+        }
         Destroy(temp, 2f);
         GameManager.Instance.StatisticTrackDamageDealt(amount, gameObject);
     }
@@ -310,28 +336,49 @@ public class UnitBase : MonoBehaviour
     private IEnumerator Electrocuted()
     {
         int instance = 5;
+        Vector3 pos = transform.position;
+        pos.y++;
+        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
+        temp.GetComponentInChildren<TextMeshPro>().text = "Electrocuted";
+        Destroy(temp, 1f);
         for (int i = 0; i < instance; i++)
         {
-            yield return new WaitForSeconds(1f);
-            GameManager.Instance.PlaySfx("Lightning Bolt");
+            yield return new WaitForSeconds(0.6f);
+            GameManager.Instance.PlaySfx("Electrocuted");
             Destroy(Instantiate(GameManager.Instance._specialEffects[1], transform.position, Quaternion.identity), 1f);
-            _UnitAI.target.DealDamage(25, true, Element.Lightning);
+            _UnitAI.target.DealDamage(15 + (_UnitAI.target.unitLevel), true, Element.Lightning);
         }
     }
     private IEnumerator Wildfire()
     {
         yield return new WaitForSeconds(0f);
-        GameManager.Instance.PlaySfx("Fire Burst");
+        GameManager.Instance.PlaySfx("Wildfire");
+        Vector3 pos = transform.position;
+        pos.y++;
+        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
+        temp.GetComponentInChildren<TextMeshPro>().text = "Wildfire";
         Destroy(Instantiate(GameManager.Instance._specialEffects[2], transform.position, Quaternion.identity), 1f);
-        _UnitAI.target.DealDamage(125, true, Element.Fire);
+        fireRes -= 0.1f;
+        waterRes -= 0.1f;
+        lightningRes -= 0.1f;
+        earthRes -= 0.1f;
+        windRes -= 0.1f;
+        iceRes -= 0.1f;
+        darkRes -= 0.1f;
+        lightRes -= 0.1f;
+        _UnitAI.target.DealDamage(_UnitAI.target.unitLevel * 1.2f, true, Element.Fire);
     }
 
     private IEnumerator Geocrust()
     {
         yield return new WaitForSeconds(0f);
-        GameManager.Instance.PlaySfx("Stone Solidify");
+        GameManager.Instance.PlaySfx("Geocrust");
+        Vector3 pos = _UnitAI.target.transform.position;
+        pos.y++;
+        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
+        temp.GetComponentInChildren<TextMeshPro>().text = "Geocrust";
         Destroy(Instantiate(GameManager.Instance._specialEffects[2], _UnitAI.target.transform.position, Quaternion.identity), 1f);
-        _UnitAI.target.currentShd += 100;
+        _UnitAI.target.currentShd += _UnitAI.target.currentHp * 0.1f;
     }
 
     private IEnumerator ApplyElement(Element _element)

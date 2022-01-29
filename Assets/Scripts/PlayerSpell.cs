@@ -182,12 +182,12 @@ public class PlayerSpell : MonoBehaviour
         return false;
     }
 
-    private void DeliverSpellDamage(float _spellDamageAmount)
+    private void DeliverSpellDamage(float _spellDamageAmount, bool isCrit = false)
     {
         Destroy(Instantiate(specialEffect, _ub._UnitAI.targetPosition.position, Quaternion.identity), 2f);
         _ub.Cast();
         _ub.currentMp -= currentSpell.manaCost;
-        _ub.DealDamage(_spellDamageAmount, true, currentSpell.spellElement);
+        _ub.DealDamage(_spellDamageAmount, true, currentSpell.spellElement, isCrit);
         _ub.InitiateApplyElement(currentSpell.spellElement);
         sharedCd = StartCooldown();
         sharedCurrentCd = sharedCd;
@@ -212,7 +212,7 @@ public class PlayerSpell : MonoBehaviour
             if (select < jet_critChance)
             {
                 amount *= jet_critDamage;
-                print(currentSpell.spellName + " Critical");
+                DeliverSpellDamage(amount, true);
             }
             DeliverSpellDamage(amount);
         }

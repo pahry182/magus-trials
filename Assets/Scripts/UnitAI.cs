@@ -8,7 +8,7 @@ public class UnitAI : MonoBehaviour
 {
     private UnitBase _thisUnit;
     public Transform targetPosition;
-    private bool isTargetInAttackRange;
+    [HideInInspector] public bool isTargetInAttackRange;
 
     public UnitBase target;
     public LayerMask targetLayer;
@@ -90,13 +90,19 @@ public class UnitAI : MonoBehaviour
     void MoveToTarget()
     {
         if (targetPosition && 
-            !isTargetInAttackRange && 
+            !opponentDetected && 
             !target.isUnitDead && 
             !_thisUnit.isUnitDead &&
-            _thisUnit.unitState == UnitAnimState.idle)
+            (_thisUnit.unitState == UnitAnimState.idle || _thisUnit.unitState == UnitAnimState.moving)
+            )
         {
+            _thisUnit.unitState = UnitAnimState.moving;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition.position, _thisUnit.movSpeed * Time.deltaTime);
-        }        
+        }
+        else
+        {
+            _thisUnit.unitState = UnitAnimState.idle;
+        }   
     }
 
     void AttackRangeDetection()
