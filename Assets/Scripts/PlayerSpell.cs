@@ -188,7 +188,7 @@ public class PlayerSpell : MonoBehaviour
         _ub.Cast();
         _ub.currentMp -= currentSpell.manaCost;
         _ub.DealDamage(_spellDamageAmount, true, currentSpell.spellElement);
-        _ub._UnitAI.target.ApplyElement(currentSpell.spellElement);
+        _ub.InitiateApplyElement(currentSpell.spellElement);
         sharedCd = StartCooldown();
         sharedCurrentCd = sharedCd;
         GameManager.Instance.PlaySfx(currentSpell.spellName);

@@ -213,6 +213,8 @@ public class GameManager : MonoBehaviour
             if (elapsedTime != 0)
             {
                 _activeCharacter.GetComponent<PlayerSpell>().sharedCurrentCd -= elapsedTime;
+                _activeCharacter.currentMp += _activeCharacter.manaRegen * elapsedTime;
+                if (_activeCharacter.currentMp > _activeCharacter.maxMp) _activeCharacter.currentMp = _activeCharacter.maxMp;
             }
             timeMarked = Time.time;
             if (_enemySpawnManager._enemy == null) return;
@@ -230,6 +232,8 @@ public class GameManager : MonoBehaviour
             if (elapsedTime != 0)
             {
                 _activeCharacter.GetComponent<PlayerSpell>().sharedCurrentCd -= elapsedTime;
+                _activeCharacter.currentMp += _activeCharacter.manaRegen * elapsedTime;
+                if (_activeCharacter.currentMp > _activeCharacter.maxMp) _activeCharacter.currentMp = _activeCharacter.maxMp;
             }
             timeMarked = Time.time;
             if (_enemySpawnManager._enemy == null) return;

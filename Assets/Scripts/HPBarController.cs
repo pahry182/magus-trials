@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnitBarStatus : MonoBehaviour
+public class HPBarController : MonoBehaviour
 {
     private Vector3 localScale;
     private UnitBase _ub;
