@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
 using TMPro;
-using System.Collections;
+using UnityEngine;
 
 public enum UnitType
 {
@@ -45,9 +45,11 @@ public class UnitBase : MonoBehaviour
     public string unitName = "Amia";
     public int unitLevel = 1;
     public float currentHp = 100f;
+    public float currentShd = 0f;
     public float currentMp = 100f;
     public float currentXp;
     public float maxHp = 100f;
+    public float maxShd = 100f;
     public float maxMp = 100f;
     public float maxXp = 100f;
     public float manaRegen = 0;
@@ -196,15 +198,23 @@ public class UnitBase : MonoBehaviour
             }
         }
         
-        if (target.currentHp - amount < 1)
+        if (target.currentShd >= amount)
         {
-            DeclareDeath(target);
+            target.currentShd -= amount;
+        }
+        else if (target.currentShd < amount && target.currentShd > 0)
+        {
+            target.currentHp -= (amount - target.currentShd);
+            target.currentShd = 0;
         }
         else
         {
             target.currentHp -= amount;
         }
-
+        if (target.currentHp < 1)
+        {
+            DeclareDeath(target);
+        }
         if (isManastriking) isManastriking = false;
 
         print(gameObject.tag + " " + amount);
@@ -264,10 +274,10 @@ public class UnitBase : MonoBehaviour
         return _amount;
     }
 
-    public void ApplyElement(Element _element)
+    public void InitiateApplyElement(Element _element)
     {
-        StartCoroutine(ApplyElementC(_element));
-        CheckElementalReaction();
+        StartCoroutine(_UnitAI.target.ApplyElement(_element));
+        _UnitAI.target.CheckElementalReaction();
     }
 
     public void CheckElementalReaction()
@@ -285,6 +295,13 @@ public class UnitBase : MonoBehaviour
             affectedByElement = Element.Neutral;
             affectedBySecondElement = Element.Neutral;
             StartCoroutine(Wildfire());
+        }
+        if ((affectedByElement == Element.Ice && affectedBySecondElement == Element.Earth) ||
+            (affectedByElement == Element.Earth && affectedBySecondElement == Element.Ice))
+        {
+            affectedByElement = Element.Neutral;
+            affectedBySecondElement = Element.Neutral;
+            StartCoroutine(Geocrust());
         }
     }
 
@@ -307,7 +324,15 @@ public class UnitBase : MonoBehaviour
         _UnitAI.target.DealDamage(125, true, Element.Fire);
     }
 
-    private IEnumerator ApplyElementC(Element _element)
+    private IEnumerator Geocrust()
+    {
+        yield return new WaitForSeconds(0f);
+        GameManager.Instance.PlaySfx("Stone Solidify");
+        Destroy(Instantiate(GameManager.Instance._specialEffects[2], _UnitAI.target.transform.position, Quaternion.identity), 1f);
+        _UnitAI.target.currentShd += 100;
+    }
+
+    private IEnumerator ApplyElement(Element _element)
     {
         bool isSecondSlot = false;
         if (affectedByElement == Element.Neutral)
