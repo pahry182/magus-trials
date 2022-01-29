@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f494989a36fa2d4eb09813d1faf969b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UnitAI: {fileID: 0}
   _sr: {fileID: 0}
   _levelText: {fileID: 0}
   unitName: Enemy
@@ -234,6 +235,7 @@ MonoBehaviour:
   maxHp: 110
   maxMp: 80
   maxXp: 0
+  manaRegen: 0
   att: 11
   critChance: 0.15
   critMultiplier: 0.65
@@ -267,10 +269,16 @@ MonoBehaviour:
   iceRes: 0
   lightRes: 0
   darkRes: 0
+  unitState: 0
   isUnitDead: 0
+  isManastriking: 0
+  isMysticFielding: 0
   attCooldown: 0
   stunDuration: 0
   frozenDuration: 0
+  affectedByElement: 0
+  affectedBySecondElement: 0
+  isAttack: 0
 --- !u!114 &8758871889207156748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d170dd9ad9148a54089840de63147e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPosition: {fileID: 0}
   target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
@@ -291,6 +300,7 @@ MonoBehaviour:
   targetTag: Player
   gizmoColor: {r: 0, g: 1, b: 0, a: 1}
   gizmoShow: 1
+  unitDir: 0
 --- !u!114 &-1293562557664493272
 MonoBehaviour:
   m_ObjectHideFlags: 0

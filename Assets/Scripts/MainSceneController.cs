@@ -25,6 +25,9 @@ public class MainSceneController : UIController
     public float cdSwitch;
     public float currentCdSwitch;
 
+    [SerializeField] private Transform DamagePopUp;
+    [SerializeField] private CanvasGroup SettingPanel;
+
     private void Awake()
     {
         backgroundPanel.gameObject.SetActive(true);
@@ -79,8 +82,6 @@ public class MainSceneController : UIController
         
         
         GameManager.Instance.isBattleStarted = true;
-        
-
     }
 
     public void SwitchCharacterButton()
@@ -313,5 +314,29 @@ public class MainSceneController : UIController
         if (activeSlot[0] != null) slot1name = activeSlot[0].unitName;
         if (activeSlot[1] != null) slot2name = activeSlot[1].unitName;
         slotText.text = "Slot 1: " + slot1name + " Slot 2: " + slot2name;
+    }
+
+    public void testDamagePopUp()
+    {
+        Transform damagePopUpTransform = Instantiate(DamagePopUp, Vector3.zero, Quaternion.identity);
+        DamagePopUp damagePopup = damagePopUpTransform.GetComponent<DamagePopUp>();
+        damagePopup.SetupDamagePopUp(999);
+    }
+
+    public void CloseSettingPanel()
+    {
+        StartCoroutine(SettingandClose(SettingPanel, startMenuPanel, 0.3f));
+    }
+
+    public void SettingButton()
+    {
+        StartCoroutine(SettingandClose(startMenuPanel, SettingPanel, 0.3f));
+    }
+
+    private IEnumerator SettingandClose(CanvasGroup con1, CanvasGroup con2, float duration)
+    {
+        StartCoroutine(FadeOut(con1, duration));
+        yield return new WaitForSeconds(duration);
+        StartCoroutine(FadeIn(con2, duration));
     }
 }

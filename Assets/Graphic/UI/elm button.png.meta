@@ -1,0 +1,374 @@
+fileFormatVersion: 2
+guid: a657aaedeb51bf549885826ee386624d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3789301990745790303
+    second: Group of 33 Objects_0
+  - first:
+      213: -6876334048517237685
+    second: Group of 33 Objects_1
+  - first:
+      213: -9086215454764675748
+    second: Group of 33 Objects_2
+  - first:
+      213: 8503631430179753835
+    second: Group of 33 Objects_3
+  - first:
+      213: -2458002802784555342
+    second: Group of 33 Objects_4
+  - first:
+      213: -7165192134080700284
+    second: Group of 33 Objects_5
+  - first:
+      213: 3442167356305387286
+    second: Group of 33 Objects_6
+  - first:
+      213: -4374207537377576006
+    second: Group of 33 Objects_7
+  - first:
+      213: 2997304407998052744
+    second: Group of 33 Objects_8
+  - first:
+      213: 2650809351163862231
+    second: Group of 33 Objects_9
+  - first:
+      213: 6784432961635531287
+    second: elm button_0
+  - first:
+      213: -144375671304384696
+    second: elm button_1
+  - first:
+      213: -1849461152478336194
+    second: elm button_2
+  - first:
+      213: -4860481478734825241
+    second: elm button_3
+  - first:
+      213: 7245059345980288546
+    second: elm button_4
+  - first:
+      213: -5738829829856971080
+    second: elm button_5
+  - first:
+      213: -173826041578115283
+    second: elm button_6
+  - first:
+      213: 4466590968315441038
+    second: elm button_7
+  - first:
+      213: 5885398032682946605
+    second: elm button_8
+  - first:
+      213: 928091735621984728
+    second: elm button_9
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: elm button_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 191
+        width: 156
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71abcb845d5272e50800000000000000
+      internalID: 6784432961635531287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_1
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 194
+        width: 155
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f81b587131ffdf0800000000000000
+      internalID: -144375671304384696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_2
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 194
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3be4a471e46556e0800000000000000
+      internalID: -1849461152478336194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_3
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 196
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e835a6d8d91c8cb0800000000000000
+      internalID: -4860481478734825241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_4
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 195
+        width: 156
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22e67c5d61f9b8460800000000000000
+      internalID: 7245059345980288546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 3
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b6b5f4eca49b50b0800000000000000
+      internalID: -5738829829856971080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_6
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 3
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f260bd222769df0800000000000000
+      internalID: -173826041578115283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_7
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 0
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8fe86712d48cfd30800000000000000
+      internalID: 4466590968315441038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_8
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 1
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2099db14522da150800000000000000
+      internalID: 5885398032682946605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: elm button_9
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 1
+        width: 155
+        height: 156
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d169bc248e31ec00800000000000000
+      internalID: 928091735621984728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
