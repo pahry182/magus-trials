@@ -10,12 +10,16 @@ public class MainSceneController : UIController
     public CanvasGroup startMenuPanel;
     public CanvasGroup ingamePanel;
     public CanvasGroup losePanel;
+    public CanvasGroup resultTab;
     public TextMeshProUGUI defeatText;
     public TextMeshProUGUI waveText;
     public TextMeshProUGUI lifeText;
     public TextMeshProUGUI checkpointText;
     public TextMeshProUGUI slotText;
-    public GameObject resultText;
+    public TextMeshProUGUI resultWaveText;
+    public TextMeshProUGUI resultLifeText;
+    public TextMeshProUGUI resultCheckpointText;
+    public GameObject bossAlertGO;
     public Button RespawnButton;
     public PlayerSpell activeSpellSet;
     public Image[] cdFillings;
@@ -50,14 +54,14 @@ public class MainSceneController : UIController
     {
         if (GameManager.Instance.currentWave % 4 == 0 && GameManager.Instance.currentWave != 0)
         {
-            waveText.text = "Wave: " + GameManager.Instance.currentWave + " (Boss)";
+            waveText.text = GameManager.Instance.currentWave.ToString();
         }
         else
         {
-            waveText.text = "Wave: " + GameManager.Instance.currentWave;
+            waveText.text = GameManager.Instance.currentWave.ToString();
         }
-        lifeText.text = "Life: " + GameManager.Instance.currentLife;
-        checkpointText.text = "Checkpoint: " + GameManager.Instance.currentCheckpoint;
+        lifeText.text = GameManager.Instance.currentLife.ToString();
+        checkpointText.text = GameManager.Instance.currentCheckpoint.ToString();
         UpdateBatchCdFill();
         if (currentCdSwitch > 0)
         {
@@ -198,13 +202,13 @@ public class MainSceneController : UIController
         yield return new WaitForSeconds(1f);
 
         defeatText.text = GenerateDefeatText();
-        resultText.SetActive(false);
+        //resultWaveText.SetActive(false);
         CalculateResult();
         StartCoroutine(FadeIn(losePanel, 0.4f));
 
         yield return new WaitForSeconds(0.2f);
 
-        StartCoroutine(FadeIn(resultText.GetComponent<CanvasGroup>(), 0.4f));
+        //StartCoroutine(FadeIn(resultWaveText.GetComponent<CanvasGroup>(), 0.4f));
     }
 
     public void StartGameButton()
@@ -272,9 +276,9 @@ public class MainSceneController : UIController
 
     public void CalculateResult()
     {
-        resultText.GetComponent<TextMeshProUGUI>().text = "Current Wave: " + GameManager.Instance.currentWave +
-            " Current Life: " + GameManager.Instance.currentLife +
-            " Current Checkpoint: " + GameManager.Instance.currentCheckpoint;
+        resultWaveText.text = GameManager.Instance.currentWave.ToString();
+        resultLifeText.text = GameManager.Instance.currentLife.ToString();
+        resultCheckpointText.text = GameManager.Instance.currentCheckpoint.ToString();
     }
 
     public void ChangeSlot(int slot)

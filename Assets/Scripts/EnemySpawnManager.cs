@@ -51,6 +51,9 @@ public class EnemySpawnManager : MonoBehaviour
         int select = Random.Range(0, GameManager.Instance._normalEnemyPool.Length);
         if (GameManager.Instance.currentWave % 4 == 0)
         {
+            GameManager.Instance._msC.bossAlertGO.SetActive(true);
+            yield return new WaitForSeconds(0.8f);
+            GameManager.Instance._msC.bossAlertGO.SetActive(false);
             Instantiate(GameManager.Instance._bossEnemyPool[select], new Vector3(Random.Range(-8f, 8f), 0f, 0f), Quaternion.identity);
         }
         else

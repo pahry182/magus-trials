@@ -217,7 +217,9 @@ public class UnitBase : MonoBehaviour
         }
         if (isManastriking) isManastriking = false;
 
-        print(gameObject.tag + " " + amount);
+        GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], target.transform.position, Quaternion.identity);
+        temp.GetComponentInChildren<TextMeshPro>().text = Mathf.Round(amount).ToString();
+        Destroy(temp, 2f);
         GameManager.Instance.StatisticTrackDamageDealt(amount, gameObject);
     }
 

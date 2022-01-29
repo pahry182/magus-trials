@@ -7,66 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8758871889207156748, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: attRange
-      value: 1.87
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: att
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: def
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: maxHp
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: maxMp
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: isBoss
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: attSpeed
-      value: 2.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: growthHp
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: spellRes
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: currentHp
-      value: 140
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: currentMp
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889207156749, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: growthAtt
-      value: 2.25
-      objectReference: {fileID: 0}
     - target: {fileID: 8758871889207157233, guid: b2c1e936e50e5934b86ecaf02624efda,
         type: 3}
       propertyPath: m_Name
@@ -126,36 +66,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889391205532, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.1250432
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871889391205532, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2242146
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871890577361156, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.125043
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871890577361156, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.0634
-      objectReference: {fileID: 0}
-    - target: {fileID: 8758871890577361156, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.937
-      objectReference: {fileID: 0}
-    - target: {fileID: 9217073603647364957, guid: b2c1e936e50e5934b86ecaf02624efda,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.886
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2c1e936e50e5934b86ecaf02624efda, type: 3}
