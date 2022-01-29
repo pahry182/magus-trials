@@ -161,7 +161,7 @@ public class UnitBase : MonoBehaviour
 
     private IEnumerator AttackAnimation()
     {
-        yield return new WaitForSeconds(attBackSwing);
+        yield return new WaitForSeconds(attSwing);
         DealDamage(att);
     }
 
