@@ -257,7 +257,7 @@ public class GameManager : MonoBehaviour
     public void PlayBgm(string name)
     {
         Sound bgm = Array.Find(audio.backgroundMusics, sound => sound.name == name);
-        print(bgm.name + name);
+
         if (bgm.name == name && bgm.audioSource.isPlaying) return;
         if (bgm == null)
         {

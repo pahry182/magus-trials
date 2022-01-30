@@ -20,6 +20,7 @@ public class MainSceneController : UIController
     public TextMeshProUGUI resultLifeText;
     public TextMeshProUGUI resultCheckpointText;
     public GameObject bossAlertGO;
+    public GameObject[] characterSelection;
     public Button RespawnButton;
     public PlayerSpell activeSpellSet;
     public Image[] cdFillings;
@@ -213,7 +214,7 @@ public class MainSceneController : UIController
 
     public void StartGameButton()
     {
-        if (GameManager.Instance._characterSlot[0] == null)
+        if (GameManager.Instance._characterSlot[0] == null || GameManager.Instance._characterSlot[1] == null)
         {
             print("Pasang char di slot 1 tod");
             return;
@@ -286,6 +287,7 @@ public class MainSceneController : UIController
         UnitBase assignee = null;
         UnitBase[] activeSlot = GameManager.Instance._characterSlot;
         UnitBase[] pool = GameManager.Instance._characterPool;
+        bool isAssigned = false;
         assignee = pool[slot];
         for (int i = 0; i < activeSlot.Length; i++)
         {
@@ -303,10 +305,21 @@ public class MainSceneController : UIController
             if (activeSlot[i] == null && !activeSlot.Contains(assignee))
             {
                 activeSlot[i] = assignee;
+                isAssigned = true;
                 assignee.gameObject.SetActive(true);
                 break;
             }
         }
+
+        if (isAssigned)
+        {
+            characterSelection[slot].SetActive(true);
+        }
+        else
+        {
+            characterSelection[slot].SetActive(false);
+        }
+
         UpdateSlot();
     }
 

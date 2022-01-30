@@ -66,7 +66,6 @@ public class TestDragonbones : MonoBehaviour
         if (!player.animation.isPlaying)
         {
             player.animation.Play("amia_attack_1", 1);
-            print("pong1");
         }
     }
 
@@ -79,7 +78,6 @@ public class TestDragonbones : MonoBehaviour
         if (!player.animation.isPlaying)
         {
             player.animation.Play("amia_idle_1", 1);
-            print("pong2");
         }
     }
     
@@ -93,7 +91,6 @@ public class TestDragonbones : MonoBehaviour
         if (!player.animation.isPlaying)
         {
             player.animation.Play("amia_walk_fast", 1);
-            print("pong3");
         }
     }
 }

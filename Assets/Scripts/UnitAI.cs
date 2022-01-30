@@ -98,11 +98,7 @@ public class UnitAI : MonoBehaviour
         {
             _thisUnit.unitState = UnitAnimState.moving;
             transform.position = Vector2.MoveTowards(transform.position, targetPosition.position, _thisUnit.movSpeed * Time.deltaTime);
-        }
-        else
-        {
-            _thisUnit.unitState = UnitAnimState.idle;
-        }   
+        }  
     }
 
     void AttackRangeDetection()
@@ -110,7 +106,8 @@ public class UnitAI : MonoBehaviour
         var collider = Physics2D.OverlapCircle(transform.position, attRange, targetLayer);
         opponentDetected = collider != null;
         if (target == null) return;
-        if (opponentDetected && !target.isUnitDead && !_thisUnit.isUnitDead && _thisUnit.unitState == UnitAnimState.idle)
+        if (opponentDetected && !target.isUnitDead && !_thisUnit.isUnitDead &&
+            (_thisUnit.unitState == UnitAnimState.idle || _thisUnit.unitState == UnitAnimState.moving))
         {
             onOpponentDetected?.Invoke(collider.gameObject);
             _thisUnit.unitState = UnitAnimState.attacking;

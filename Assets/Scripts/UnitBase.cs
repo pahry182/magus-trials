@@ -40,6 +40,7 @@ public class UnitBase : MonoBehaviour
     [HideInInspector] public UnitAI _UnitAI;
     [HideInInspector] public SpriteRenderer _sr;
     [HideInInspector] public TextMeshPro _levelText;
+    [HideInInspector] public ElementAffectedController _eac;
 
     [Header("Basic Stat")]
     public string unitName = "Amia";
@@ -119,6 +120,7 @@ public class UnitBase : MonoBehaviour
         _UnitAI = GetComponent<UnitAI>();
         _sr = GetComponentInChildren<SpriteRenderer>();
         _levelText = GetComponentInChildren<TextMeshPro>();
+        _eac = GetComponentInChildren<ElementAffectedController>();
     }
 
     private void Update()
@@ -237,6 +239,7 @@ public class UnitBase : MonoBehaviour
         Vector3 pos = target.transform.position;
         pos.y += Random.Range(-0.2f, 0.2f);
         GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
+        temp.GetComponentInChildren<TextMeshPro>().color = ElementalDamageColor(_spellElementType);
         if (isCrit)
         {
             temp.GetComponentInChildren<TextMeshPro>().text = "Crit " + Mathf.Round(amount).ToString();
@@ -247,6 +250,31 @@ public class UnitBase : MonoBehaviour
         }
         Destroy(temp, 2f);
         GameManager.Instance.StatisticTrackDamageDealt(amount, gameObject);
+    }
+
+    private Color32 ElementalDamageColor(Element _element)
+    {
+        switch (_element)
+        {
+            case Element.Fire:
+                return new Color32(255, 48, 4, 255);
+            case Element.Water:
+                return new Color32(50, 110, 255, 255);
+            case Element.Lightning:
+                return new Color32(237, 20, 241, 255);
+            case Element.Earth:
+                return new Color32(203, 177, 41, 255);
+            case Element.Wind:
+                return new Color32(32, 254, 2, 255);
+            case Element.Ice:
+                return new Color32(0, 255, 232, 255);
+            case Element.Light:
+                return new Color32(255, 253, 139, 255);
+            case Element.Dark:
+                return new Color32(69, 69, 69, 255);
+            default:
+                return new Color32(255, 255, 255, 255);
+        }
     }
 
     private float CalculateKillers(float _amount, UnitBase _target)
@@ -313,26 +341,32 @@ public class UnitBase : MonoBehaviour
         if ((affectedByElement == Element.Lightning && affectedBySecondElement == Element.Water) ||
             (affectedByElement == Element.Water && affectedBySecondElement == Element.Lightning))
         {
-            affectedByElement = Element.Neutral;
-            affectedBySecondElement = Element.Neutral;
+            ResetAffectedElement();
             StartCoroutine(Electrocuted());
         }
         if ((affectedByElement == Element.Fire && affectedBySecondElement == Element.Wind) ||
             (affectedByElement == Element.Wind && affectedBySecondElement == Element.Fire))
         {
-            affectedByElement = Element.Neutral;
-            affectedBySecondElement = Element.Neutral;
+            ResetAffectedElement();
             StartCoroutine(Wildfire());
         }
         if ((affectedByElement == Element.Ice && affectedBySecondElement == Element.Earth) ||
             (affectedByElement == Element.Earth && affectedBySecondElement == Element.Ice))
         {
-            affectedByElement = Element.Neutral;
-            affectedBySecondElement = Element.Neutral;
+            ResetAffectedElement();
             StartCoroutine(Geocrust());
         }
     }
 
+    private void ResetAffectedElement()
+    {
+        affectedByElement = Element.Neutral;
+        affectedBySecondElement = Element.Neutral;
+        foreach (var item in _eac.elementIcon)
+        {
+            item.gameObject.SetActive(false);
+        }
+    }
     private IEnumerator Electrocuted()
     {
         int instance = 5;
@@ -357,6 +391,7 @@ public class UnitBase : MonoBehaviour
         pos.y++;
         GameObject temp = Instantiate(GameManager.Instance._specialEffects[4], pos, Quaternion.identity);
         temp.GetComponentInChildren<TextMeshPro>().text = "Wildfire";
+        Destroy(temp, 2f);
         Destroy(Instantiate(GameManager.Instance._specialEffects[2], transform.position, Quaternion.identity), 1f);
         fireRes -= 0.1f;
         waterRes -= 0.1f;
@@ -383,24 +418,67 @@ public class UnitBase : MonoBehaviour
 
     private IEnumerator ApplyElement(Element _element)
     {
-        bool isSecondSlot = false;
+        string savedElement = "";
+        
         if (affectedByElement == Element.Neutral)
         {
             affectedByElement = _element;
+            foreach (var item in _eac.elementIcon)
+            {
+                if(item.gameObject.name == _element.ToString())
+                {
+                    item.gameObject.SetActive(true);
+                    savedElement = item.gameObject.name;
+                    break;
+                }
+            }
         }
         else
         {
-            affectedBySecondElement = _element;
-            isSecondSlot = true;
+            StartCoroutine(ApplytoSecond(_element));
         }
+
+        //print(savedElement + " " + savedSecondElement);
+
         yield return new WaitForSeconds(5f);
-        if (isSecondSlot)
+
+        affectedByElement = Element.Neutral;
+        foreach (var item in _eac.elementIcon)
         {
-            affectedBySecondElement = Element.Neutral;
+            if (item.gameObject.name == savedElement)
+            {
+                item.gameObject.SetActive(false);
+                savedElement = "";
+                break;
+            }
         }
-        else
+    }
+
+    private IEnumerator ApplytoSecond(Element _element)
+    {
+        string savedSecondElement = "";
+        affectedBySecondElement = _element;
+        foreach (var item in _eac.elementIcon)
         {
-            affectedByElement = Element.Neutral;
+            if (item.gameObject.name == _element.ToString())
+            {
+                item.gameObject.SetActive(true);
+                savedSecondElement = item.gameObject.name;
+                break;
+            }
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        affectedBySecondElement = Element.Neutral;
+        foreach (var item in _eac.elementIcon)
+        {
+            if (item.gameObject.name == savedSecondElement)
+            {
+                item.gameObject.SetActive(false);
+                savedSecondElement = "";
+                break;
+            }
         }
     }
 
